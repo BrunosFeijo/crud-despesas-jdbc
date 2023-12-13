@@ -42,7 +42,23 @@ public class DespesaDAO implements IDespesasDAO {
 
     @Override
     public Despesa update(Despesa despesa) {
-        return null;
+        String sql = "UPDATE Despesas SET descricao = ?, valor = ?, data = ?,  categoria = ? WHERE id = ?";
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setString(1, despesa.getDescricao());
+            preparedStatement.setDouble(2, despesa.getValor());
+            preparedStatement.setDate(3, Date.valueOf(despesa.getData()));
+            preparedStatement.setString(4, despesa.getCategoria().toString());
+            preparedStatement.setLong(5, despesa.getId());
+
+            preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return despesa;
     }
 
     @Override
