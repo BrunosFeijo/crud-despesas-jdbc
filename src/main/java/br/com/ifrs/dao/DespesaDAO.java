@@ -4,9 +4,7 @@ import br.com.ifrs.infra.ConnectionFactory;
 import br.com.ifrs.model.Categoria;
 import br.com.ifrs.model.Despesa;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
+import java.sql.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,7 +14,7 @@ public class DespesaDAO implements IDespesasDAO{
     public Despesa save(Despesa despesa) {
         try (Connection connection = ConnectionFactory.getConnection()){
             String sql = "INSERT INTO Despesas (descricao, valor, data, categoria) VALUES (?,?,?,?)";
-            PreparedStatement preparedStatement =  connection.prepareStatement(sql);
+            PreparedStatement preparedStatement =  connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, despesa.getDescricao());
             preparedStatement.setDouble(2, despesa.getValor());
@@ -24,13 +22,19 @@ public class DespesaDAO implements IDespesasDAO{
             preparedStatement.setString(4, despesa.getCategoria().toString());
 
             preparedStatement.executeUpdate();
+            ResultSet resultSet=  preparedStatement.getGeneratedKeys();
+            resultSet.next();
+
+            Long id = resultSet.getLong("id");
+            despesa.setId(id);
+
 
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
 
-        return null;
+        return despesa;
     }
 
     @Override

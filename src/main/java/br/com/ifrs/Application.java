@@ -10,12 +10,13 @@ public class Application {
     public static void main(String[] args) {
         DespesaDAO dao = new DespesaDAO();
 
-        Despesa despesa = new Despesa("Pagamento do aluguel",
-                LocalDate.of(2023,12,13),
-                1200,
-                Categoria.MORADIA);
+        Despesa despesa = new Despesa("Livro de Prog",
+                LocalDate.of(2023,12,9),
+                150,
+                Categoria.EDUCACAO);
 
-        dao.save(despesa);
+        Despesa despesaInsercao = dao.save(despesa);
+        System.out.println("Foi inserido a despesa com id: " + despesaInsercao.getId());
 
     }
 }
