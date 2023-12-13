@@ -12,11 +12,15 @@ import java.util.Optional;
 public class Application {
     public static void main(String[] args) {
         DespesaDAO dao = new DespesaDAO();
-        Optional<Despesa> despesaOptional = dao.findById(1L);
-        Despesa despesa = despesaOptional.get();
 
-        despesa.setValor(1000);
-        dao.update(despesa);
+        dao.delete(5L);
+        
+
+//        Optional<Despesa> despesaOptional = dao.findById(1L);
+//        Despesa despesa = despesaOptional.get();
+//
+//        despesa.setValor(1000);
+//        dao.update(despesa);
 
 
 //        List<Despesa> despesas = dao.findByCategoria(Categoria.TRANSPORTE);
