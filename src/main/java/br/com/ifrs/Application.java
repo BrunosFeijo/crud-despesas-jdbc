@@ -14,7 +14,7 @@ public class Application {
         DespesaDAO dao = new DespesaDAO();
 
         dao.delete(5L);
-        
+
 
 //        Optional<Despesa> despesaOptional = dao.findById(1L);
 //        Despesa despesa = despesaOptional.get();
